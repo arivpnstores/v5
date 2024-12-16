@@ -1,9 +1,12 @@
 #!/bin/bash
 
+# Set debconf selections
+echo iptables-persistent iptables-persistent/autosave_v4 boolean true | debconf-set-selections
+echo iptables-persistent iptables-persistent/autosave_v6 boolean true | debconf-set-selections
 
 # initializing var
-
-export DEBIAN_FRONTEND=noninteractive
+DEBIAN_FRONTEND=noninteractive apt install -y iptables-persistent
+#export DEBIAN_FRONTEND=noninteractive
 MYIP=$(wget -qO- ipinfo.io/ip);
 MYIP2="s/xxxxxxxxx/$MYIP/g";
 NET=$(ip -o $ANU -4 route show to default | awk '{print $5}');
